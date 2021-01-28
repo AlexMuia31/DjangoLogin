@@ -20,7 +20,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='login/index.html')),
+    path('', TemplateView.as_view(template_name='login/home.html')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
