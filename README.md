@@ -127,15 +127,51 @@ is always convenient to users because the dont have to memorize the password to 
 
 ![](images/site.png)
 
-- Go to https://console.developers.google.com/ to create a OAuth app. and input the details Name, URIs, and Authorized URIs as shown below:
+- Go to https://console.developers.google.com/ to create a OAuth app. and input the details Name, URIs, and
+  Authorized URIs as shown below:
 
 ![](images/google1.png)
 
 ![](images/google2.png)
 
-- Take the Client ID and the secret key the head to the admin dashboard and add the a social application as shown below:
-  ![](images/googlesocial.png)
+- For github log into your account then go to settings then developer settings. create a OAuth app and get the details as shown below:
+
+![](images/github.png)
+
+- for facebook head to https://developers.facebook.com/ and get the details as shown below:
+
+![](images/facebookDev.png)
+
+- In all apps the callback should be:
+  https://localhost/accounts/google/login/callback
+  https://localhost/accounts/github/login/callback
+  https://localhost/accounts/facebook/login/callback
+
+- the URIs should be:
+  https://localhost:8000
+
+* Take the Client ID and the secret key the head to the admin dashboard and add the a social application as shown below:
+
+![](images/googlesocial.png)
 
 ![](images/facebooksocial.png)
 
 ![](images/githubsocial.png)
+
+- facebook wont work without ssl . To set it up you need to install the following packages:
+
+                pip install django-extensions
+                pip install Werkzeug
+                pip install pyOpenSSL
+
+                then add 'django-extensions' to your INSTALLED_APPS
+
+* now run the server using the following command:
+
+         python manage.py runserver_plus --cert-file /tmp/cert
+
+* Go to your app and you'll be able to log in with the social apps. Here's how mine looks like:
+
+![](images/login1.png)
+
+![](images/login2.png)
