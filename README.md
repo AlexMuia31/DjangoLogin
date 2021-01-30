@@ -1,5 +1,9 @@
 # Django login project using Allauth
 
+- Go to wireframepro.mockflow.com and draw a design of what you like your frontend to look like. Here's mine.
+
+![](images/wireframe.png)
+
 - Check if you have python3 installed in your system using the command: python --version
 
 - Install virtualenv using the command: pip install virtualenv
@@ -67,6 +71,53 @@ is always convenient to users because the dont have to memorize the password to 
                             path('accounts/', include('allauth.urls')),
                             ...
                         ]
+
+* Go to the App you created and make a folder called templates. Inside this folder create another folder with the name same as the app. In the second folder create a file called home.html or your preferred name.
+  write the following code inside there. You can style it as you want.
+
+                      {% if user.is_authenticated %}
+              <h3>Welcome to InterIntel</h3>
+              <p>You're logged in as , {{ user.username }} !</p>
+
+              {% else %}
+              <h5>Register/login below</h5>
+              <a href="{% provider_login_url 'google' action='reauthenticate'  %}"
+              ><button type="button" class="btn btn-danger mx-5 mb-3">
+                  <i class="fa fa-google"></i>
+                  Login with Google
+              </button></a
+              ></br>
+              <a href="{% provider_login_url 'github' action='reauthenticate' %}">
+              <button type="button" class="btn btn-dark mx-5 mb-3">
+              <i class="fa fa-github"></i> Login with Github
+              </button>
+                  </a>
+              </br>
+              <a href="{% provider_login_url 'facebook' action='reauthenticate' %}">
+              <button type="button" class="btn btn-primary mx-5">
+                  <i class="fa fa-facebook"></i> Login with facebook
+              </button>
+              </a>
+
+                  {% endif %}
+
+* Then go to urls.py and tell it to point to this file as follows:
+
+            from django.contrib import admin
+            from django.urls import path, include
+            from django.views.generic import TemplateView #this is for class based views
+            from django.conf import settings #settings for static files
+            from django.conf.urls.static import static # for static files
+
+            urlpatterns = [
+                path('', TemplateView.as_view(template_name='login/home.html')),
+                path('admin/', admin.site.urls),
+                path('accounts/', include('allauth.urls')),
+
+            ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) # loading static files
+
+* This is how my app looks after styling:
+  ![](images/frontend.png)
 
 * Now run this command to make the migrations: python manage.py migrate
   Then create an admin using the command: python manage.py createsuperuser
