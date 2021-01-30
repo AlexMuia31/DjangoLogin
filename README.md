@@ -81,3 +81,10 @@ is always convenient to users because the dont have to memorize the password to 
 ![](images/google1.png)
 
 ![](images/google2.png)
+
+- Take the Client ID and the secret key the head to the admin dashboard and add the a social application as shown below:
+  ![](images/googlesocial.png)
+
+![](images/facebooksocial.png)
+
+![](images/githubsocial.png)
