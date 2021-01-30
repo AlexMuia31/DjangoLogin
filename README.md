@@ -75,3 +75,9 @@ is always convenient to users because the dont have to memorize the password to 
 * Add a Site for your domain, matching settings.SITE_ID (django.contrib.sites app) as shown below:
 
 ![](images/site.png)
+
+- Go to https://console.developers.google.com/ to create a OAuth app. and input the details Name, URIs, and Authorized URIs as shown below:
+
+![](images/google1.png)
+
+![](images/google2.png)
