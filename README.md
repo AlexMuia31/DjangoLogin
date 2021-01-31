@@ -175,3 +175,69 @@ is always convenient to users because the dont have to memorize the password to 
 ![](images/login1.png)
 
 ![](images/login2.png)
+
+# Setting uwsgi/nginx configuration
+
+To configure uswgi in our project we start my installing the python development files needed through
+ths command: sudo apt-get install python3-dev .
+
+- Install uwsgi using this command: pip install https://projects.unbit.it/downloads/uwsgi-lts.tar.gz . this will give you the long term support version.
+
+* Since this is a global installation make a directory that will hold the configurations using this command:
+
+              sudo nano /etc/uwsgi/sites/yourPreferedName.ini
+
+Next, we need to set up uWSGI so that it handles our project well. Change into the root project directory by setting the chdir option. We are going to use Nginx as a proxy server to specify how uWSGI shold listen for connections. Here is how the configuration file should look like.
+
+![](images/nano2.png)
+
+- Next, we’ll create a systemd unit file to manage the uWSGI emperor process and automatically start uWSGI at boot.
+
+* We will create the unit file in the /etc/systemd/system directory, where administrator-created unit files are kept. We will call our file uwsgi.service using this command.
+
+          sudo nano /etc/systemd/system/uwsgi.service
+
+Here is how it should look like:
+
+![](images/uswgi.png)
+
+# Configuring Nginx
+
+- Install and configure Nginx as our reverse proxy using the following command:
+
+          sudo apt-get install nginx
+
+* create a server block configuration using this command:
+
+          sudo nano /etc/nginx/sites-available/NameOfYourProject
+
+* The configurations should look like this:
+
+![](images/conf.png)
+
+Save the changes and enable the Nginx using this command:
+
+        sudo ln -s /etc/nginx/sites-available/NameOfYourProject /etc/nginx/sites-enabled
+
+- Check the configuration syntax by typing:
+
+        sudo nginx -t
+
+* Check the configuration syntax by typing:
+
+          sudo nginx -t
+
+If no syntax errors are detected, you can restart your Nginx service to load the new configuration:
+
+      sudo systemctl restart nginx
+
+If you remember from earlier, we never actually started the uWSGI server. Do that now by typing:
+
+        sudo systemctl start uwsgi
+
+- You should now be able to reach your two projects by going to their respective domain names. Both the public and administrative interfaces should work as expected.
+
+- If this goes well, you can enable both of the services to start automatically at boot by typing:
+
+          sudo systemctl enable nginx
+          sudo systemctl enable uwsgi
